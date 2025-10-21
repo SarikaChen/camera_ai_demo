@@ -128,6 +128,14 @@ python app.py
 
 3. 點擊「提交」等待處理，頁面會顯示 Before/After 對照。
 
+## 測試結果
+
+以下為實際測試效果（CPU 執行）：
+
+| 原圖 | 去雜訊後 | 超分辨率 (x4, Real-ESRGAN) |
+|------|----------|---------------------------|
+| ![原圖](uploads/dog.jpg) | ![去雜訊](results/dog_dn.jpg) | ![超分辨率](results/dog_sr.jpg) |
+
 ## 作者
 - Name: SarikaChen 
 - Email: sarika.chen0723@gmail.com  
