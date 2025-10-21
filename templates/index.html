@@ -1,0 +1,65 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Camera AI Demo — Super-Resolution & Denoise</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f6f7fb; margin:0; padding:24px; }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    .card { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:16px; }
+    .row { margin:12px 0; }
+    .images { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    img { max-width: 100%; border:1px solid #e5e7eb; border-radius:8px; }
+    label.opt { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid #e5e7eb; border-radius:8px; margin-right:8px; }
+    button { background:#2563eb; color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; }
+    .flash { margin-top:10px; color:#b91c1c; }
+    @media (max-width: 720px){ .images{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h2>📸 Camera AI Demo</h2>
+
+  <!-- 表單一定送到 "/"，欄位名稱必須是 image / mode -->
+  <form action="/" method="POST" enctype="multipart/form-data" class="card">
+    <div class="row">
+      <input type="file" name="image" accept="image/*" required />
+    </div>
+    <div class="row">
+      <label class="opt"><input type="radio" name="mode" value="sr" checked /> 超分辨率 (x4, Real-ESRGAN)</label>
+      <label class="opt"><input type="radio" name="mode" value="dn" /> 去雜訊 (OpenCV)</label>
+    </div>
+    <div class="row">
+      <button type="submit">開始處理</button>
+    </div>
+  </form>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash">
+        {% for message in messages %}
+          <div>{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% if orig and proc %}
+  <div class="card" style="margin-top:16px">
+    <h3>結果</h3>
+    <div class="images">
+      <div>
+        <div>原圖</div>
+        <img src="{{ url_for('uploads_file', filename=orig) }}" alt="original" />
+      </div>
+      <div>
+        <div>處理後</div>
+        <img src="{{ url_for('results_file', filename=proc) }}" alt="processed" />
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>
